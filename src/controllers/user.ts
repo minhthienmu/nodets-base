@@ -67,10 +67,13 @@ const Login = (req: Request, res: Response, next: NextFunction) => {
                 }
               );
             return res.status(200).send({
-                id: user._id,
-                username: user.username,
-                role: user.role,
-                token: accessToken
+                code: 200,
+                data: {
+                  id: user._id,
+                  username: user.username,
+                  role: user.role,
+                  token: accessToken
+                }
               });
         });
     } else {

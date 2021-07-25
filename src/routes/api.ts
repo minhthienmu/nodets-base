@@ -4,6 +4,11 @@ import controllerUser from "../controllers/user";
 
 const router = Router();
 
+//User
+router.post("/register", controllerUser.ValidateUser, controllerUser.Register);
+router.post("/login", controllerUser.Login);
+//router.post("/logout", controllerUser.Logout);
+
 //Accomodation
 router.get("/get-accomodations", controllerAccomodation.getAccomodations);
 router.post("/create-accomodation", controllerUser.CheckAuth, controllerAccomodation.createAccomodation);

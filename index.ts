@@ -48,8 +48,6 @@ app.get("/ping", async (req: Request, res: Response): Promise<Response> => {
 });
 
 //ROUTES
-app.post("/register", controllerUser.ValidateUser, controllerUser.Register);
-app.post("/login", controllerUser.Login);
 app.use("/api", apiRoutes);
 
 //ERROR HANDLING
