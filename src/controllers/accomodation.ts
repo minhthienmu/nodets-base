@@ -21,17 +21,11 @@ const createAccomodation = (
 
   return accomodation
     .save()
-    .then((result: any) => {
-      return res.status(200).json({
-        code: 200,
-        data: accomodation.id,
-      });
+    .then(() => {
+      return res.status(200).json({code: 200, data: accomodation.id});
     })
     .catch((error: Error) => {
-      return res.status(500).json({
-        data: error.message,
-        error,
-      });
+      return res.status(500).json({data: error.message, error});
     });
 };
 
@@ -39,41 +33,22 @@ const getAccomodations = (req: Request, res: Response, next: NextFunction) => {
   Accomodation.find()
     .exec()
     .then((accomodation) => {
-      return res.status(200).json({
-        code: 200,
-        data: accomodation,
-      });
+      return res.status(200).json({code: 200, data: accomodation});
     })
     .catch((error) => {
-      return res.status(500).json({
-        data: error.message,
-        error,
-      });
+      return res.status(500).json({data: error.message, error});
     });
 };
 
 const getAccomodationsDetail = (req: Request, res: Response, next: NextFunction) => {
   const id = req.query.id;
   Accomodation.findById(id)
-    .exec()
-    .then((item) => {
-      if (item) {
-        return res.status(200).json({
-          code: 200,
-          data: item,
-        });
+    .exec((err, item) => {
+      if (err || !item) {
+        return res.status(500).json({code: 500, data: "Error!"});
       }
-      return res.status(500).json({
-        code: 500,
-        data: "Not found",
-      });
+      return res.status(200).json({code: 200, data: item});
     })
-    .catch((error) => {
-      return res.status(500).json({
-        data: error.message,
-        error,
-      });
-    });
 };
 
 const updateAccomodation = (req: Request, res: Response, next: NextFunction) => {
@@ -100,32 +75,23 @@ const updateAccomodation = (req: Request, res: Response, next: NextFunction) => 
     })
 }
 
-const deleteAccommodation = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const deleteAccommodation = (req: Request, res: Response, next: NextFunction) => {
   const id = req.body.id;
   Accomodation.findByIdAndDelete(id)
     .exec()
     .then((item) => {
       if (item) {
-        return res.status(200).json({
-          code: 200,
-          data: "success",
-        });
+        return res.status(200).json({ code: 200, data: "success" });
       }
-      return res.status(500).json({
-        code: 500,
-        data: "Not found",
-      });
+      return res.status(500).json({ code: 500, data: "Not found" });
     })
     .catch((error) => {
-      return res.status(500).json({
-        data: error.message,
-        error,
-      });
+      return res.status(500).json({ data: error.message, error });
     });
+};
+
+const filterAccomodation = (req: Request, res: Response, next: NextFunction) => {
+  return res.status(200).json({ code: 200, data: "success" });
 };
 
 export default {
@@ -133,5 +99,6 @@ export default {
   getAccomodations,
   getAccomodationsDetail,
   deleteAccommodation,
-  updateAccomodation
+  updateAccomodation,
+  filterAccomodation
 };

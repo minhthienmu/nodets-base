@@ -8,7 +8,7 @@ const AccomodationSchema: Schema = new Schema(
     price: { type: Number, require: true },
     category: { type: String, require: true },
     description: { type: String },
-    owner: { type: Schema.Types.ObjectId, ref: 'User' },
+    vendor: { type: Schema.Types.ObjectId, ref: 'User' },
     image: { type: String },
     image_1: { type: String }, 
     image_2: { type: String },

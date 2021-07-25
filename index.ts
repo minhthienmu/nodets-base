@@ -5,7 +5,7 @@ import config from "./src/config/config";
 import morgan from "morgan";
 import mongoose from "mongoose";
 import apiRoutes from "./src/routes/api";
-import controllerAuth from "./src/controllers/auth";
+import controllerUser from "./src/controllers/user";
 
 const app: Application = express();
 
@@ -48,8 +48,8 @@ app.get("/ping", async (req: Request, res: Response): Promise<Response> => {
 });
 
 //ROUTES
-app.post("/login", controllerAuth.login);
-//app.use("/api", controllerAuth.checkAuth, apiRoutes);
+app.post("/register", controllerUser.ValidateUser, controllerUser.Register);
+app.post("/login", controllerUser.Login);
 app.use("/api", apiRoutes);
 
 //ERROR HANDLING
