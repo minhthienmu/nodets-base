@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 import Employee from "../models/employee";
 
-const createEmployee = (req: Request, res: Response, next: NextFunction) => {
+const createEmployee =  (req: Request, res: Response, next: NextFunction) => {
   let { name, age } = req.body;
 
   const employee = new Employee({

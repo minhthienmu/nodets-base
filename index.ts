@@ -36,26 +36,28 @@ app.use(express.urlencoded({ extended: true }));
 
 //CORS
 var corsOptions = {
-  origin: "http://127.0.0.1:5501",
+  origin: "*",
   optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
 
-app.get("/home", async (req: Request, res: Response): Promise<Response> => {
+app.get("/ping", async (req: Request, res: Response): Promise<Response> => {
   return res.status(200).json({
-    message: "Hello World!",
+    message: "Server OK!",
   });
 });
 
 //ROUTES
 app.post("/login", controllerAuth.login);
-app.use("/api", controllerAuth.checkAuth, apiRoutes);
+//app.use("/api", controllerAuth.checkAuth, apiRoutes);
+app.use("/api", apiRoutes);
 
 //ERROR HANDLING
 app.use((req: Request, res: Response) => {
   const error = new Error("Not found");
 
   res.status(404).json({
+    code: 404,
     message: error.message,
   });
 });
