@@ -7,7 +7,11 @@ const createAccomodation = (
   res: Response,
   next: NextFunction
 ) => {
-  let { name, address, price, category, image, description } = req.body;
+  let { name, address, price, category, image, description, vendor } = req.body;
+  const image_0 = image[0] ? image[0] : "";
+  const image_1 = image[1] ? image[0] : "";
+  const image_2 = image[2] ? image[0] : "";
+  const image_3 = image[3] ? image[0] : "";
 
   const accomodation = new Accomodation({
     _id: new mongoose.Types.ObjectId(),
@@ -15,8 +19,11 @@ const createAccomodation = (
     address,
     price,
     category,
-    image,
+    image: image_0,
+    image_1,
+    image_2,
     description,
+    vendor
   });
 
   return accomodation

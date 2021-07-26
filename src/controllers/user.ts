@@ -16,15 +16,15 @@ const ValidateUser = (req: Request, res: Response, next: NextFunction) => {
     User.findOne({username: req.body.username})
     .exec((err, user) => {
         if (err) {
-            return res.status(500).send({ code: 500, data: err });
+            return res.send({ code: 500, data: err });
         }
         if (user) {
-            return res.status(400).send({code: 400, data: "Failed! Username is already in use!" });
+            return res.send({code: 400, data: "Failed! Username is already in use!" });
         }
         next();
     });
   } else {
-    return res.status(500).send({ code: 500, data: "Error" });
+    return res.send({ code: 500, data: "Error" });
   }
 };
 
@@ -47,17 +47,17 @@ const Login = (req: Request, res: Response, next: NextFunction) => {
         User.findOne({username: req.body.username})
         .exec((err, user) => {
             if (err) {
-                return res.status(500).send({ code: 500, data: err });
+                return res.send({ code: 500, data: err });
             }
             if (!user) {
-                return res.status(400).send({code: 400, data: "Not Found!" });
+                return res.send({code: 400, data: "Not Found!" });
             }
             const passwordIsValid = bcrypt.compareSync(
                 req.body.password,
                 user.password
             );
             if (!passwordIsValid) {
-                return res.status(401).send({code: 401, data: "Invalid Password!"});
+                return res.send({code: 401, data: "Invalid Password!"});
             }
             const accessToken = jwt.sign(
                 { id: user._id },

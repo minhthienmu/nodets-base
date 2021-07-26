@@ -9,10 +9,10 @@ const AccomodationSchema: Schema = new Schema(
     category: { type: String, require: true },
     description: { type: String },
     vendor: { type: Schema.Types.ObjectId, ref: 'User' },
+    vendorName: { type: String },
     image: { type: String },
     image_1: { type: String }, 
     image_2: { type: String },
-    image_3: { type: String },
   },
   {
     timestamps: true,
