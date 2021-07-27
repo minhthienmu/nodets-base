@@ -7,11 +7,10 @@ const createAccomodation = (
   res: Response,
   next: NextFunction
 ) => {
-  let { name, address, price, category, image, description, vendor } = req.body;
+  let { name, address, price, category, image, description, vendor, vendorName } = req.body;
   const image_0 = image[0] ? image[0] : "";
   const image_1 = image[1] ? image[0] : "";
   const image_2 = image[2] ? image[0] : "";
-  const image_3 = image[3] ? image[0] : "";
 
   const accomodation = new Accomodation({
     _id: new mongoose.Types.ObjectId(),
@@ -23,7 +22,8 @@ const createAccomodation = (
     image_1,
     image_2,
     description,
-    vendor
+    vendor,
+    vendorName,
   });
 
   return accomodation
@@ -37,7 +37,12 @@ const createAccomodation = (
 };
 
 const getAccomodations = (req: Request, res: Response, next: NextFunction) => {
-  Accomodation.find()
+  const vendor = req.query.vendor;
+  let param = {};
+  if (vendor) {
+    param = {vendor: vendor};
+  }
+  Accomodation.find(param)
     .exec()
     .then((accomodation) => {
       return res.status(200).json({code: 200, data: accomodation});
@@ -90,7 +95,7 @@ const deleteAccommodation = (req: Request, res: Response, next: NextFunction) =>
       if (item) {
         return res.status(200).json({ code: 200, data: "success" });
       }
-      return res.status(500).json({ code: 500, data: "Not found" });
+      return res.json({ code: 500, data: "Not found" });
     })
     .catch((error) => {
       return res.status(500).json({ data: error.message, error });
